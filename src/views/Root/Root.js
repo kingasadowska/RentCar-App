@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.css";
+import AppContext from '../../context';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import EconomicsView from '../EconomicsView/EconomicsView';
 import VanView from '../VanView/VanView';
@@ -7,36 +8,33 @@ import PremiumView from '../PremiumView/PremiumView';
 import Header from '../../components/Header/Header';
 import Modal from '../../components/Modal/Modal';
 
-const initialStateItems = [
-  {
-    image: "https://pbs.twimg.com/profile_images/906557353549598720/oapgW_Fp.jpg",
-    name: "Dan Abramov",
-    description: "React core member",
-    economicLink: "https://economic.com/dan_abramov"
-  }
-];
-
 class Root extends React.Component {
   state = {
-    items: [...initialStateItems],
+    items: {
+      economic: [],
+      van: [],
+      premium: [],
+    },
     isModalOpen: false,
   };
 
   addItem = e => {
     e.preventDefault();
 
-    const newItem = {
-      name: e.target[0].value,
-      economicLink: e.target[1].value,
-      image: e.target[2].value,
-      description: e.target[3].value
-    };
+    console.log('It works!!');
 
-    this.setState(prevState => ({
-      items: [...prevState.items, newItem]
-    }));
+    // const newItem = {
+    //   name: e.target[0].value,
+    //   economicLink: e.target[1].value,
+    //   image: e.target[2].value,
+    //   description: e.target[3].value
+    // };
 
-    e.target.reset();
+    // this.setState(prevState => ({
+    //   items: [...prevState.items, newItem]
+    // }));
+
+    // e.target.reset();
   };
   
   openModal = () => {
@@ -53,18 +51,23 @@ class Root extends React.Component {
 
   render() {
     const { isModalOpen } = this.state;
+    const contextElements = {
+      ...this.state,
+      addItem: this.addItem
+    }
     
     return (
       <BrowserRouter>
-        <>
+         <AppContext.Provider value={contextElements}>
           <Header openModalFn={this.openModal} />
+          <h1>hello world</h1>
           <Switch>
             <Route exact path="/" component={EconomicsView} />
             <Route path="/van" component={VanView} />
             <Route path="/premium" component={PremiumView} />
           </Switch>
           { isModalOpen && <Modal closeModalFn={this.closeModal} /> }
-        </>
+          </AppContext.Provider>
       </BrowserRouter>
     );
   }

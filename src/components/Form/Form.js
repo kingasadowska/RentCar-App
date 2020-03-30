@@ -1,4 +1,5 @@
 import React from "react";
+import AppContext from '../../context';
 import styles from "./Form.module.scss";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
@@ -32,12 +33,14 @@ class Form extends React.Component {
     const { activeOption } = this.state;
 
     return (
+      <AppContext.Consumer>
+        {(context) => (
       <div className={styles.wrapper}>
         <Title>Add {descriptions[activeOption]}</Title>
         <form
           autoComplete="off"
           className={styles.form}
-          onSubmit={this.props.submitFn}
+          onSubmit={context.addItem}
         >
           <div className={styles.formOptions}>
             <Radio
@@ -81,6 +84,8 @@ class Form extends React.Component {
           <Button>add new item</Button>
         </form>
       </div>
+     )}
+    </AppContext.Consumer>
     );
   }
 }
