@@ -58,7 +58,6 @@ class Root extends React.Component {
       <BrowserRouter>
         <>
           <Header openModalFn={this.openModal} />
-          <h1></h1>
           <Switch>
             <Route exact path="/" component={EconomicsView} />
             <Route path="/van" component={VanView} />
