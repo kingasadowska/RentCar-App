@@ -6,7 +6,7 @@ import logoImage from '../../assets/images/logo.svg';
 
 const Header = ({ openModalFn }) => (
   <header className={styles.wrapper}>
-    <img className={styles.logo} src={logoImage} alt="FavPremium logo" />
+    <img className={styles.logo} src={logoImage} alt="CarRent logo" />
     <HeaderNavigation />
     <Button onClick={openModalFn} secondary>Add vehicle</Button>
   </header>

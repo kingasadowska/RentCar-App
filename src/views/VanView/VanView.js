@@ -1,7 +1,13 @@
 import React from 'react';
+import AppContext from '../../context';
+import List from '../../components/List/List';
 
 const VanView = () => ( 
-  <p>This is an Van View</p>
+<AppContext.Consumer>
+    {(context) => (
+      <List items={context.van} />
+    )}
+  </AppContext.Consumer>
 );
 
 export default VanView;

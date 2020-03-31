@@ -10,31 +10,20 @@ import Modal from '../../components/Modal/Modal';
 
 class Root extends React.Component {
   state = {
-    items: {
       economic: [],
       van: [],
       premium: [],
-    },
-    isModalOpen: false,
+      isModalOpen: false,
   };
 
-  addItem = e => {
+  addItem = (e, newItem) => {
     e.preventDefault();
 
-    console.log('It works!!');
+    this.setState(prevState => ({
+      [newItem.type]: [...prevState[newItem.type], newItem],
+    }));
 
-    // const newItem = {
-    //   name: e.target[0].value,
-    //   economicLink: e.target[1].value,
-    //   image: e.target[2].value,
-    //   description: e.target[3].value
-    // };
-
-    // this.setState(prevState => ({
-    //   items: [...prevState.items, newItem]
-    // }));
-
-    // e.target.reset();
+    this.closeModal();
   };
   
   openModal = () => {
@@ -60,7 +49,6 @@ class Root extends React.Component {
       <BrowserRouter>
          <AppContext.Provider value={contextElements}>
           <Header openModalFn={this.openModal} />
-          <h1>hello world</h1>
           <Switch>
             <Route exact path="/" component={EconomicsView} />
             <Route path="/van" component={VanView} />

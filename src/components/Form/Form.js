@@ -20,68 +20,136 @@ const descriptions = {
 
 class Form extends React.Component {
   state = {
-    activeOption: types.economic,
+    type: types.economic,
+    brand: "",
+    link: "",
+    image: "",
+    description: "",
+    cost: Number,
+    transmission: "",
+    passengers: Number,
+    engine: Number,
+    power: Number
   };
 
   handleRadioButtonChange = type => {
     this.setState({
-      activeOption: type,
+      type: type,
     });
   };
 
+  handleInputChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+    
+  };
+
   render() {
-    const { activeOption } = this.state;
+    const { type } = this.state;
 
     return (
       <AppContext.Consumer>
         {(context) => (
       <div className={styles.wrapper}>
-        <Title>Add {descriptions[activeOption]}</Title>
+        <Title>Add {descriptions[type]}</Title>
         <form
           autoComplete="off"
           className={styles.form}
-          onSubmit={context.addItem}
+          onSubmit={(e) => context.addItem(e, this.state)}
         >
           <div className={styles.formOptions}>
             <Radio
               id={types.economic}
-              checked={activeOption === types.economic}
+              checked={type === types.economic}
               changeFn={() => this.handleRadioButtonChange(types.economic)}
             >
               Economic
             </Radio>
+
             <Radio
               id={types.van}
-              checked={activeOption === types.van}
+              checked={type === types.van}
               changeFn={() => this.handleRadioButtonChange(types.van)}
             >
               Van
             </Radio>
+
             <Radio
               id={types.premium}
-              checked={activeOption === types.premium}
+              checked={type === types.premium}
               changeFn={() => this.handleRadioButtonChange(types.premium)}
             >
               Premium
             </Radio>
+
           </div>
+
           <Input
-            name="name"
-            label={activeOption === types.economic ? "Economic Name" : "Name"}
-            maxLength={30}
-          />
-          {activeOption !== types.premium ? (
+            onChange={this.handleInputChange}
+            value={this.state.brand}
+            name="brand"
+            label="Brand"/>
+
+          {type === types.premium ? (
             <Input
-              name="link"
-              label={activeOption === types.economic ? "Economic Link" : "Link"}
+              onChange={this.handleInputChange}
+              value={this.state.power}
+              type="number"
+              name="power"
+              label="Horse powers"
             />
           ) : null}
 
-          {activeOption === types.economic ? (
-            <Input name="image" label="Image" />
+          {type === types.premium ? (
+            <Input
+              onChange={this.handleInputChange}
+              value={this.state.engine}
+              name="engine"
+              label="Engine"
+            />
           ) : null}
-          <Input tag="textarea" name="description" label="Description" />
-          <Button>add new item</Button>
+
+            <Input 
+            onChange={this.handleInputChange}
+            value={this.state.image}
+            name="image" 
+            label="Image" />
+
+          <Input 
+            onChange={this.handleInputChange}
+            value={this.state.cost}
+            type="number"
+            name="cost" 
+            label="Cost" />
+
+          <Input 
+            onChange={this.handleInputChange}
+            value={this.state.transmission}
+            name="transmission" 
+            label="Transmission" />
+
+          <Input 
+            onChange={this.handleInputChange}
+            value={this.state.passengers}
+            type="number"
+            name="passengers" 
+            label="Number of passengers" />
+
+          <Input 
+            onChange={this.handleInputChange}
+            value={this.state.description}
+            tag="textarea" 
+            name="description" 
+            label="Description" />
+
+          <Input 
+            onChange={this.handleInputChange}
+            value={this.state.link}
+            name="link" 
+            label="Link" />
+
+          <Button>Add</Button>
         </form>
       </div>
      )}
