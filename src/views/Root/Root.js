@@ -5,8 +5,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import EconomicsView from '../EconomicsView/EconomicsView';
 import VanView from '../VanView/VanView';
 import PremiumView from '../PremiumView/PremiumView';
-import Header from '../../components/Header/Header';
-import Modal from '../../components/Modal/Modal';
+import Header from 'components/Header/Header';
+import Modal from 'components/Modal/Modal';
 
 class Root extends React.Component {
   state = {
